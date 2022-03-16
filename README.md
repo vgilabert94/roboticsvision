@@ -1,6 +1,6 @@
 ## Robotics Vision
-### Vicente Gilabert Maño
-### Master degree in Computer Vision (URJC)
+## Vicente Gilabert Maño
+## Master degree in Computer Vision (URJC)
 
 You can use the [editor on GitHub](https://github.com/vgilabert94/roboticsvision.github.io/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
 
