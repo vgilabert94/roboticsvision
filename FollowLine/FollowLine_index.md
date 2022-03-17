@@ -7,10 +7,10 @@
 
 ### Introduccion
 
-#### Controles
+### Controles
 
 ### Sistema perceptivo
 
-#### Control proporcional (P)
+### Control proporcional (P)
 
-#### Control derivativo (PD)
+### Control derivativo (PD)
