@@ -4,13 +4,8 @@
 
 In this page will collect the two exercises of Robotics Vision in Computer Vision Master degree at URJC University. 
 
-### Practices
+1. [Follow line](Follow_line/Follow_line_index.md) -> Using a car simulation try to follow red line.
 
-1. [Follow line](FollowLine/FollowLine_index.md) -> Using a car simulation try to follow red line.
-2. [3D reconstruction](3D_reconstruction/3D_reconstruction_index.md)
-
-
-### Otros
 
 You can use the [editor on GitHub](https://github.com/vgilabert94/roboticsvision.github.io/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
 
