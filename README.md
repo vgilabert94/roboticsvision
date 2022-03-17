@@ -5,4 +5,4 @@
 
 In this page will collect the two exercises of Robotics Vision in Computer Vision Master degree at URJC University. 
 
-1. [Follow line](Follow_line/FollowLine_index.md) -> Using a car simulation try to follow red line.
+1. [Follow line](Follow_line/FollowLine_index.md) -> Follow red line using a car simulation.
