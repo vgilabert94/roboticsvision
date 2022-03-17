@@ -3,6 +3,6 @@
 ### Master degree in Computer Vision (URJC)
 ---
 
-222In this page will collect the two exercises of Robotics Vision in Computer Vision Master degree at URJC. 
+In this page will collect the two exercises of Robotics Vision in Computer Vision Master degree at URJC. 
 
 1. [Follow line](FollowLine/FollowLine_index.md) -> Follow red line using a car simulation.
