@@ -9,7 +9,7 @@
 
 #### Controles
 
-#### Sistema perceptivo
+### Sistema perceptivo
 
 #### Control proporcional (P)
 
