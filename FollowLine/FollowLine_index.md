@@ -5,11 +5,11 @@
 
 ## Exercise 1 - Follow red line.
 
-#### Introduccion
+### Introduccion
 
 #### Controles
 
-#### Sistema perceptivoç
+#### Sistema perceptivo
 
 #### Control proporcional (P)
 
