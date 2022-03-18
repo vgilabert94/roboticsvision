@@ -68,16 +68,16 @@ Los otros dos puntos en azul son los centros de la imagen, es decir nuestros pun
 ### 4. Control proporcional (P)
 
 Una vez tenemos el preprocesado terminado, donde nos devuelve un punto (el mas alto del contorno) se obtendra la desviacion, donde será:
-```math
-error = pto_ref - pto_actual
 ```
 error = pto_ref - pto_actual
-
+```
 Donde pto_ref es la coordenada en x del punto central del la imagen y pto_actual es la coordenada x del punto a del *frame* actual.
 
 La primera aproximacion para resolver el problema es el control propocional, donde simplemente tendremos una variable Kp que ajustar de forma experimental para obtener el giro en cada *frame*.
+```
 giro = kp * error
 HAL.setW(giro)
+```
 
 Con este control estamos modificando el giro de nuestro coche, dependiendo del error obtenido en cada *frame*.
 En este caso la **velocidad permanece constante** durante toda la vuelta al circuito. Los parametros obtenidos para un correcto funcionamiento son:

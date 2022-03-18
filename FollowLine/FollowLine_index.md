@@ -67,7 +67,7 @@ Los otros dos puntos en azul son los centros de la imagen, es decir nuestros pun
 
 ### 4. Control proporcional (P)
 
-Una vez tenemos el preprocesado terminado, donde nos devuelve un punto (el mas alto del contorno) se obtendra la desviacion, donde será:
+Una vez tenemos el preprocesado terminado, donde nos devuelve un punto (el mas alto del contorno) se obtendra la desviacion (error), que será:
 ```
 error = pto_ref - pto_actual
 ```
