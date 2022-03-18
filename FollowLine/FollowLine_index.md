@@ -13,6 +13,7 @@
 El objetivo de esta practica es desarrolar un sistema para tratar de controlar un coche sobre una linea roja en la carretera.
 
 ![Imagen original](images/road_red_line.png)
+<img src="images/road_red_line.png" alt="drawing" width="350"/>
 
 Hay que tratar de ir el maximo tiempo posible sobre la linea roja y evitar el balanceo descontrolado del coche. Esto se va a poder proobar con diferentes enfoques de  controles PID.
 
@@ -69,5 +70,10 @@ Una vez tenemos el preprocesado terminado, donde nos devuelve un punto (el mas a
 
 error = pto_ref - pto_actual
 
+Donde pto_ref es la coordenada en x del punto central del la imagen y pto_actual es la coordenada x del punto a del frame actual.
+
+La primera aproximacion para resolver el problema es el control propocional, donde simplemente tendremos una variable Kp que ajustar de forma experimental para obtener el giro en cada frame.
+giro = kp * error
+HAL.setW(giro)
 
 ### 5. Control derivativo (PD)
