@@ -12,8 +12,7 @@
 
 El objetivo de esta practica es desarrolar un sistema para tratar de controlar un coche sobre una linea roja en la carretera.
 
-![Imagen original](images/road_red_line.png)
-<img src="images/road_red_line.png" alt="drawing" width="350"/>
+<img src="images/road_red_line.png" alt="img_ori" width="500"/>
 
 Hay que tratar de ir el maximo tiempo posible sobre la linea roja y evitar el balanceo descontrolado del coche. Esto se va a poder proobar con diferentes enfoques de  controles PID.
 
@@ -53,12 +52,12 @@ En robótica uno de los sensores más utilizados son las cámaras debido a la gr
 Aunque no siempre es una tarea sencilla, ya que tenemos una matriz de números donde hay que extraer la información, por lo que en algunos casos suele ser una tarea difícil.
 
 Para nuestro problema, al ser un caso bastante controlado se va a detectar la línea roja con un filtrado de color en el espacio HSV. También se aplicarán algunas operaciones morfológicas para eliminar posible ruido que nos aparezca en la imagen.
-El resultado de esta función para cada frame, será un resultado similar al siguiente:
-![mask](images/hsv_filter.png)
+El resultado de esta función para cada *frame*, será un resultado similar al siguiente:
+<img src="images/hsv_filter.png" alt="mask" width="500"/>
 
 Una vez tenemos la máscara que contiene la información del color rojo, se han obtenido los contornos de la imagen. De los contornos obtenidos se han filtrado por tamaño, para evitar posibles pequeños contornos que nos afecten y así robustecer el sistema. Utilizando el contorno de mayor área, se ha obtenido el punto más alto, es decir el de menor coordenada y. 
 En la imagen siguiente imagen se puede ver en verde el punto más alto (menor y):
-![center](images/centros.png)
+<img src="images/centros.png" alt="center" width="500"/>
 
 Los otros dos puntos en azul son los centros de la imagen, es decir nuestros puntos de referencia.
 
@@ -67,13 +66,32 @@ Los otros dos puntos en azul son los centros de la imagen, es decir nuestros pun
 ### 4. Control proporcional (P)
 
 Una vez tenemos el preprocesado terminado, donde nos devuelve un punto (el mas alto del contorno) se obtendra la desviacion, donde será:
-
+```math
+error = pto_ref - pto_actual
+```
 error = pto_ref - pto_actual
 
-Donde pto_ref es la coordenada en x del punto central del la imagen y pto_actual es la coordenada x del punto a del frame actual.
+Donde pto_ref es la coordenada en x del punto central del la imagen y pto_actual es la coordenada x del punto a del *frame* actual.
 
-La primera aproximacion para resolver el problema es el control propocional, donde simplemente tendremos una variable Kp que ajustar de forma experimental para obtener el giro en cada frame.
+La primera aproximacion para resolver el problema es el control propocional, donde simplemente tendremos una variable Kp que ajustar de forma experimental para obtener el giro en cada *frame*.
 giro = kp * error
 HAL.setW(giro)
+
+Con este control estamos modificando el giro de nuestro coche, dependiendo del error obtenido en cada *frame*.
+En este caso la velocidad permanece constante durante toda la vuelta al circuito. Los parametros obtenidos para un correcto funcionamiento son:
+
+vel = 2 ; kp_W = 0.005 -> bien, con balanceo.
+vel = 3 ; kp_W = 0.005 -> bien, con balanceo.
+vel = 4 ; kp_W = 0.005 -> bien, con balanceo.
+vel = 5 ; kp_W = 0.001 -> se estrella el coche.
+vel = 5 ; kp_W = 0.01 -> conduccion brusca.
+vel = 5 ; kp_W = 0.008 -> puede ser el mejor
+vel = 6 ; kp_W = 0.008 -> probar?
+
+Se adjunta un video del mejor resultado obtenido para esta primera aproximacion (control P):
+Parametros vel = 6 ; kp_W = 0.008
+
+INSERTAR VIDEO
+
 
 ### 5. Control derivativo (PD)
