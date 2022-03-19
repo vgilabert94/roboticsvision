@@ -10,6 +10,7 @@
 
 ### 1. Introduccion
 
+<div class=text-justify>
 El objetivo de esta practica es desarrolar un sistema para tratar de controlar un coche sobre una linea roja en la carretera.
 
 <p align="center">
@@ -17,10 +18,11 @@ El objetivo de esta practica es desarrolar un sistema para tratar de controlar u
 </p> 
 
 Hay que tratar de ir el maximo tiempo posible sobre la linea roja y evitar el balanceo descontrolado del coche. Esto se va a poder proobar con diferentes enfoques de  controles PID.
-
+</div>
 
 
 ### 2. Controles
+<div class=text-justify>
 Para ello se va a utilizar la plataforma de simulacion robotica [Unibotics](https://unibotics.org/), que nos va a permitir la programacion en Python para el control del robot (coche en nuestro caso).
 Esta plataforma nos brinda algunas librerias y metodos para el control del robot. A continuacion se explican:
 
@@ -43,9 +45,10 @@ Esta plataforma nos brinda algunas librerias y metodos para el control del robot
 ```python
  GUI.showImage()
 ```
-
+</div>
 
 ### 3. Sistema perceptivo y preprocesado
+<div class=text-justify>
 Los humanos estamos acostumbrado a las imágenes y saber interpretar la escena, detectando los objetos o cualquier detalle. 
 En robótica uno de los sensores más utilizados son las cámaras debido a la gran cantidad información que contienen.
 Aunque no siempre es una tarea sencilla, ya que tenemos una matriz de números donde hay que extraer la información, por lo que en algunos casos suele ser una tarea difícil.
@@ -65,7 +68,7 @@ En la imagen siguiente imagen se puede ver en verde el punto más alto (menor y)
 </p> 
 
 Los otros dos puntos en azul son los centros de la imagen, es decir nuestros puntos de referencia.
-
+</div>
 
 
 ### 4. Control proporcional (P)
