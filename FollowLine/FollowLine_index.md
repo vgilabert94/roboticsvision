@@ -12,7 +12,9 @@
 
 El objetivo de esta practica es desarrolar un sistema para tratar de controlar un coche sobre una linea roja en la carretera.
 
-<img src="images/road_red_line.png" alt="img_ori" align="center" width="500"/>
+<p align="center">
+  <img src="images/road_red_line.png" alt="img_ori" width="500"/>
+</p> 
 
 Hay que tratar de ir el maximo tiempo posible sobre la linea roja y evitar el balanceo descontrolado del coche. Esto se va a poder proobar con diferentes enfoques de  controles PID.
 
@@ -33,17 +35,14 @@ Esta plataforma nos brinda algunas librerias y metodos para el control del robot
 ```python
  HAL.setV()
 ```
-
 * Para asignar el giro al robot:
 ```python
  HAL.setW()
 ```
-
 * Para visualizar las imagenes en una ventana de la plataforma:
 ```python
  GUI.showImage()
 ```
-
 
 
 ### 3. Sistema perceptivo y preprocesado
@@ -54,12 +53,16 @@ Aunque no siempre es una tarea sencilla, ya que tenemos una matriz de números d
 Para nuestro problema, al ser un caso bastante controlado se va a detectar la línea roja con un filtrado de color en el espacio HSV. También se aplicarán algunas operaciones morfológicas para eliminar posible ruido que nos aparezca en la imagen.
 El resultado de esta función para cada *frame*, será un resultado similar al siguiente:
 
-<img src="images/hsv_filter.png" alt="mask" align="center" width="500"/>
+<p align="center">
+  <img src="images/hsv_filter.png" alt="mask" width="500"/>
+</p> 
 
 Una vez tenemos la máscara que contiene la información del color rojo, se han obtenido los contornos de la imagen. De los contornos obtenidos se han filtrado por tamaño, para evitar posibles pequeños contornos que nos afecten y así robustecer el sistema. Utilizando el contorno de mayor área, se ha obtenido el punto más alto, es decir el de menor coordenada y. 
 En la imagen siguiente imagen se puede ver en verde el punto más alto (menor y):
 
-<img src="images/centros.png" alt="center" align="center" width="500"/>
+<p align="center">
+  <img src="images/centros.png" alt="center" width="500"/>
+</p> 
 
 Los otros dos puntos en azul son los centros de la imagen, es decir nuestros puntos de referencia.
 
