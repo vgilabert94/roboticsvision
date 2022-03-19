@@ -67,7 +67,7 @@ Los otros dos puntos en azul son los centros de la imagen, es decir nuestros pun
 
 ### 4. Control proporcional (P)
 
-Una vez tenemos el preprocesado terminado, donde nos devuelve un punto (el mas alto del contorno) se obtendra la desviacion, donde será:
+Una vez tenemos el preprocesado terminado, donde nos devuelve un punto (el mas alto del contorno) se obtendra la desviacion (error), que será:
 ```
 error = pto_ref - pto_actual
 ```
@@ -97,3 +97,25 @@ INSERTAR VIDEO
 
 
 ### 5. Control derivativo (PD)
+
+Una posible mejora para suavizar la conduccion y evitar un balanceo tan brusco como el caso anterior, es añadir una variable mas. 
+El contrololador D (Derivativo) propociona una salida dependiendo de la tasa de error actual con respecto al error en el tiempo anterior. Este controlador se añade con el controlador P (proporcional).
+La consecuencia esperada de este componente es que si el error sigue aumentando de un instante a otro, la corrección aplicada por el componente proporcional se intensificará. En otras palabras, la respuesta se intensificará si la corrección no es suficiente y se amortiguará si se acerca al óptimo.
+
+```
+diff_error = error - last_error
+giro = kp * error  +  kd * diff_error
+```
+
+Con este control estamos modificando el giro de nuestro coche, dependiendo del error obtenido en cada *frame*. Para los ejemplos siguientes, se mantiene la **velocidad permanece constante** durante toda la vuelta al circuito.
+En este caso los parametros obtenidos para un correcto funcionamiento son:
+
+vel = 2 ; kp_W = 0.005 ; kp_W = 0.005 -> bien, con balanceo.
+vel = 3 ; kp_W = 0.005 ; kp_W = 0.005 -> bien, con balanceo.
+vel = 4 ; kp_W = 0.005 ; kp_W = 0.005 -> bien, con balanceo.
+vel = 5 ; kp_W = 0.001 ; kp_W = 0.005 -> se estrella el coche.
+vel = 5 ; kp_W = 0.01  ; kp_W = 0.005 -> conduccion brusca.
+vel = 5 ; kp_W = 0.008 ; kp_W = 0.005 -> puede ser el mejor
+vel = 6 ; kp_W = 0.008 ; kp_W = 0.005 -> probar?
+
+
