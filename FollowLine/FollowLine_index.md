@@ -144,13 +144,32 @@ In this case the **speed remains constant** during the entire lap of the circuit
 
 ### 6. Speed Control
 
+To further refine the velocity, we use a case-based controller, depending on whether we are on a straight line, a small curve, a medium curve, a large curve or a steep curve. To estimate what the curve looks like, we rely on the dispersion between the center point and the top point and the displacement error made.   
+    
+   > disper = point_topx - point_med
+       
+   1. If the error is too small (<5 px) or the dispersion is too small(<5 px). This indicates that we are dealing with a straight line. So we go to twice the optimal speed. We give the car a "turbo".     
+   > vel = vel_opt*2
+   2. If the error is not too large (<20 px) or the dispersion is not too large (<25 px). It indicates that we are facing a slightly curved terrain. So we can go to the optimal speed. This speed has been calculated experimentally.      
+   > vel = vel_opt
+   3. If the dispersion is between 25 and 40 pixeles. This indicates that we are dealing with a medium curve terrain. So we adjust the velocity as the optimal velocity minus the error velocity obtained by the PD and it is also weighted by a factor of 0.2.   
+   > vel = vel_opt - error_vel*0.2
+   4. If the dispersion is between 40 and 60 pixels. This is a very curved terrain. So we add the same velocity as in the previous case but now the error velocity is multiplied by a factor of 0.3.    
+   > vel = vel_opt - error_vel*0.3
+   5. If the dispersion is already higher than 60 pixels. This is a very steep curve. So the speed is calculated as in the previous case but now the error rate is multiplied by 0.5.   
+   > vel = vel_opt - error_vel*0.5
+   6. If we have lost the line, we try to recover it by turning the car.   
 
+Note: If the error speed is higher than the optimum speed, we assume that the error speed will be equal to the optimum speed, to avoid problems in the speed setting.   
+  
 
 
 ### 7. Conclusions
 
 After the work done and quite a few tests with different parameters and possible configurations, the main conclusions are:A P, PD and PID control system has been implemented. With the PD control system the timing and control is improved, but with PID no improvement can be seen.
+
 * Using kp of the P controller, we can correct the error. If it is too high, it has a very sharp movement, but if it is too low, because it is so light, it cannot rotate and it crashes.
 * Using kd of the PD controller, it tries to correct the possible error of the P controller, but if it is too high it can affect the oscillation by increasing the oscillation with a greater abruptness.
 * With the ki of the PID controller, I have not seen a noticeable improvement. I don't know if it is a parameter problem or if it is just a comparison with the previous frame that has no effect.
+
 As a general conclusion it is necessary to look for a balance between the speed of the car and that the car goes as much as possible along the line. In my case I have tried to make the car go a little faster, even if it spends less time on the line. As the speed increases, the processor speed must be higher, so the code must be able to run in real time.
