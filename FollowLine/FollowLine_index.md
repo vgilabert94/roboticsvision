@@ -166,7 +166,7 @@ Cases:
     elif error >= min_th+60:
         new_speed = vel - vel*0.008
 ``` 
-Where min_th is a threshold selected by user to consider what is a straight line. In this case, vel is the actual speed of the car. If the error speed is higher than the maximum speed, we assign new_speed = max_speed.
+Where min_th is a threshold (20 px) selected by user to consider what is a straight line. In this case, vel is the actual speed of the car. If the error speed is higher than the maximum speed, we assign new_speed = max_speed.
   
 
 
