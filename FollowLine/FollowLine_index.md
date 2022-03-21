@@ -144,23 +144,29 @@ In this case the **speed remains constant** during the entire lap of the circuit
 
 ### 6. Speed Control
 
-To further refine the velocity, we use a case-based controller, depending on whether we are on a straight line, a small curve, a medium curve, a large curve or a steep curve. To estimate what the curve looks like, we rely on the dispersion between the center point and the top point and the displacement error made.   
-    
-   > disper = point_topx - point_med
-       
-   1. If the error is too small (<5 px) or the dispersion is too small(<5 px). This indicates that we are dealing with a straight line. So we go to twice the optimal speed. We give the car a "turbo".     
-   > vel = vel_opt*2
-   2. If the error is not too large (<20 px) or the dispersion is not too large (<25 px). It indicates that we are facing a slightly curved terrain. So we can go to the optimal speed. This speed has been calculated experimentally.      
-   > vel = vel_opt
-   3. If the dispersion is between 25 and 40 pixeles. This indicates that we are dealing with a medium curve terrain. So we adjust the velocity as the optimal velocity minus the error velocity obtained by the PD and it is also weighted by a factor of 0.2.   
-   > vel = vel_opt - error_vel*0.2
-   4. If the dispersion is between 40 and 60 pixels. This is a very curved terrain. So we add the same velocity as in the previous case but now the error velocity is multiplied by a factor of 0.3.    
-   > vel = vel_opt - error_vel*0.3
-   5. If the dispersion is already higher than 60 pixels. This is a very steep curve. So the speed is calculated as in the previous case but now the error rate is multiplied by 0.5.   
-   > vel = vel_opt - error_vel*0.5
-   6. If we have lost the line, we try to recover it by turning the car.   
+To further refine the velocity, we use a case-based controller, depending on whether we are on a straight line, a small curve, a medium curve, a large curve or a steep curve. To estimate what the curve looks like, we rely on the dispersion (error) between the center point and the top point and the displacement error made.   
 
-Note: If the error speed is higher than the optimum speed, we assume that the error speed will be equal to the optimum speed, to avoid problems in the speed setting.   
+```
+error = pto_ref - pto_actual
+```
+Where pto_ref is the x-coordinate of the center point of the image and pto_actual is the x-coordinate of point a of the current *frame*.
+
+Cases:
+
+```
+    if error > min_th and error < min_th+20:
+        new_speed = vel - vel*0.002
+		
+    elif error >= min_th+20 and error < min_th+40:
+        new_speed = vel - vel*0.004
+		
+    elif error >= min_th+40 and error < min_th+60:
+        new_speed = vel - vel*0.006
+		
+    elif error >= min_th+60:
+        new_speed = vel - vel*0.008
+``` 
+Where min_th is a threshold selected by user to consider what is a straight line. In this case, vel is the actual speed of the car. If the error speed is higher than the maximum speed, we assign new_speed = max_speed.
   
 
 
