@@ -25,8 +25,8 @@ You have to try to go as long as possible over the red line and avoid uncontroll
 For this we are going to use the robotic simulation platform [Unibotics](https://unibotics.org/), which will allow us to program in Python to control the robot (car in our case).
 This platform provides us with some libraries and methods to control the robot. These are explained below:
 
-* __from HAL import HAL__ $\rightarrow$ -> Hardware Abstraction Layer. Contains functions to send and receive information to the robot hardware (Gazebo).
-* __from GUI import GUI__ $\rightarrow$ ->  Graphical User Interface. Contiene las funciones para la visualizacion de imagenes.
+* __from HAL import HAL__ -> Hardware Abstraction Layer. Contains functions to send and receive information to the robot hardware (Gazebo).
+* __from GUI import GUI__ ->  Graphical User Interface. Contiene las funciones para la visualizacion de imagenes.
 
 * To receive the image from the robot's camera:
 ```python
@@ -78,7 +78,7 @@ error = pto_ref - pto_actual
 Where pto_ref is the x-coordinate of the center point of the image and pto_actual is the x-coordinate of point a of the current *frame*.
 
 
-The first approach to solve the problem is the proportional control, where we will simply have a variable Kp to adjust experimentally to obtain the rotation in each *frame*.
+The first approach to solve the problem is the proportional control, where we will simply have a variable *kp* to adjust experimentally to obtain the rotation in each *frame*.
 ```
 giro = kp * error
 HAL.setW(giro)
@@ -101,7 +101,7 @@ Parameters: speed = 6 ; kp_W = 0.01
 [![P control video](https://img.youtube.com/vi/OrHpqVX2hmI/maxresdefault.jpg)](https://www.youtube.com/watch?v=OrHpqVX2hmI)
 
 
-### 5. Derivative control (PD)
+### 5. Adding derivative control (PD)
 
 A possible improvement to smooth the drive and avoid a swing as abrupt as the previous case, is to add one more variable. 
 The D (Derivative) controller provides an output depending on the current error rate with respect to the error at the previous time. This controller is added with the P (proportional) controller.
@@ -112,26 +112,43 @@ diff_error = error - last_error
 giro = kp * error  +  kd * diff_error
 ```
 Where *error* is the error of the current frame and *last_error* is the error of the previous frame. 
-In this PD control PD we have two variables kp and kd to adjust experimentally to obtain the rotation in each *frame*.
+In this PD control PD we have two variables *kp* and *kd* to adjust experimentally to obtain the rotation in each *frame*.
 
 With this control we are modifying the turn of our car, depending on the error obtained in each *frame*.
-In this case the **speed remains constant** during the entire lap of the circuit. The best parameters tested with the times and comments are:
+In this case the **speed remains constant** during the entire lap of the circuit. After many tests one of the best solutions found to obtain a balance between lap time and driving on the line is the following:
+
+[![PD control video](https://img.youtube.com/vi/AqDBD71PByo/maxresdefault.jpg)](https://www.youtube.com/watch?v=AqDBD71PByo)
 
 
-| **Kp_W** | **Kd_W** | **speed** | **time** |                         **comments**                        |
-|:--------:|----------|:---------:|:--------:|:-----------------------------------------------------------:|
-| 0.008    |          | 4         | 1.49 min | driving with a fine roll and considerable time on the line. |
-| 0.008    |          | 5         | 1.29 min | light swing but less time on the line.                      |
-| 0.01     |          | 5         | 1.27 min | more abrupt swing but more time on the line.                |
-| 0.008    |          | 6         | 1.14 min | finer swing, faster time lap but not as long on the line.   |
-| 0.01     |          | 6         | 1.14 min | more abrupt swing but more time on the line.                |
-| 0.008    |          | 7         |          |                                                             |
-| 0.01     |          | 7         |          |                                                             |
+### 5. Adding Integral control (PID)
 
-vel = 5 ; kp_W = 0.008 ; kd_W = 0.005 ; t =  -> 
-vel = 5 ; kp_W = 0.01  ; kd_W = 0.005 ; t =  -> 
-vel = 6 ; kp_W = 0.008 ; kd_W = 0.005 ; t =  ->  
-vel = 6 ; kp_W = 0.01  ; kd_W = 0.005 ; t =  ->  
-vel = 7 ; kp_W = 0.008 ; kd_W = 0.005 ; t =  ->  
-vel = 7 ; kp_W = 0.01  ; kd_W = 0.005 ; t =  ->  
+For this latest version an integral control has been added with a *ki* parameter that multiplies the summation of the current error with the previous one. This means that the error is accumulated and its effects are as follows:
+- In a curve step this component (*ki*) is forcing a correction in the direction of the curve, compensating for the error that P cannot rectify.
+- If we manage to correctly parameterize this component, it allows to damp the oscillations.
 
+```
+diff_error = error - last_error
+sum_error = error + last_error
+giro = kp * error  +  kd * diff_error + ki * sum_error
+```
+
+Where *error* is the error of the current frame and *last_error* is the error of the previous frame. 
+In this PD control PD we have two variables *kp*, *kd* and *ki* to adjust experimentally to obtain the rotation in each *frame*.
+
+With this control we are modifying the turn of our car, depending on the error obtained in each *frame*.
+In this case the **speed remains constant** during the entire lap of the circuit. After many tests one of the best solutions found to obtain a balance between lap time and driving on the line is the following:
+
+[![PID control video](https://img.youtube.com/vi/AqDBD71PByo/maxresdefault.jpg)](https://www.youtube.com/watch?v=AqDBD71PByo)
+
+### 6. Speed Control
+
+
+
+
+### 7. Conclusions
+
+After the work done and quite a few tests with different parameters and possible configurations, the main conclusions are:A P, PD and PID control system has been implemented. With the PD control system the timing and control is improved, but with PID no improvement can be seen.
+* Using kp of the P controller, we can correct the error. If it is too high, it has a very sharp movement, but if it is too low, because it is so light, it cannot rotate and it crashes.
+* Using kd of the PD controller, it tries to correct the possible error of the P controller, but if it is too high it can affect the oscillation by increasing the oscillation with a greater abruptness.
+* With the ki of the PID controller, I have not seen a noticeable improvement. I don't know if it is a parameter problem or if it is just a comparison with the previous frame that has no effect.
+As a general conclusion it is necessary to look for a balance between the speed of the car and that the car goes as much as possible along the line. In my case I have tried to make the car go a little faster, even if it spends less time on the line. As the speed increases, the processor speed must be higher, so the code must be able to run in real time.
