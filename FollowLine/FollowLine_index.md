@@ -205,11 +205,11 @@ def adjust_vel(error, vel):
     if error > min_th and error < min_th+20:
         new_speed = vel - vel*0.001
     elif error >= min_th+20 and error < min_th+40:
-        new_speed = vel - vel*0.003
+        new_speed = vel - vel*0.002
     elif error >= min_th+40 and error < min_th+60:
-        new_speed = vel - vel*0.006
+        new_speed = vel - vel*0.005
     elif error >= min_th+60:
-        new_speed = vel - vel*0.009
+        new_speed = vel - vel*0.008
     
     if new_speed < speed_min:
         new_speed = speed_min
@@ -228,7 +228,7 @@ Parameters:
 
 
 <p align="center">
-	<a href="https://www.youtube.com/watch?v=AqDBD71PByo">
+	<a href="https://www.youtube.com/watch?v=Bxno-UfDaz0">
 	<img src="images/youtube_play.png" alt="youtube" width="30%"/>
 	</a>
 </p>
