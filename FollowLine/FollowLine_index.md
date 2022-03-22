@@ -107,7 +107,7 @@ Parameters:
 
 
 <p align="center">
-	<a href="https://www.youtube.com/watch?v=OrHpqVX2hmI">
+	<a href="https://www.youtube.com/watch?v=OrHpqVX2hmI" target="_blank">
 	<img src="images/youtube_play.png" alt="youtube" width="30%"/>
 	</a>
 </p>
