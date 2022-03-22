@@ -14,7 +14,7 @@ The objective of this practice is to develop a system to try to control a car ov
 
 <p align="center">
   <img src="images/road_red_line.png" alt="img_ori" width="500"/>
-</p> 
+</p>
 
 You have to try to go as long as possible over the red line and avoid uncontrolled rolling of the car. This can be achieved with different PID control approaches.
 
@@ -60,6 +60,9 @@ The result of this function for each *frame*, will be a result similar to the fo
 	<img src="images/hsv_filter.png" alt="mask" width="500"/>
 	</a>
 </p>
+
+[Prueba](https://www.google.es/)
+<p><img src="images/hsv_filter.png" alt="Foto F1" width="200px" height="100px" /></p>
 
 Once we have the mask containing the red color information, the contours of the image have been obtained. From the obtained contours have been filtered by size, to avoid possible small contours that affect us and thus robust the system. Using the contour with the largest area, we have obtained the highest point, i.e. the one with the smallest y-coordinate. 
 In the following image you can see in green the highest point (lowest y):
@@ -203,3 +206,7 @@ After the work done and quite a few tests with different parameters and possible
 * With the ki of the PID controller, I have not seen a noticeable improvement. I don't know if it is a parameter problem or if it is just a comparison with the previous frame that has no effect.
 
 As a general conclusion it is necessary to look for a balance between the speed of the car and that the car goes as much as possible along the line. In my case I have tried to make the car go a little faster, even if it spends less time on the line. As the speed increases, the processor speed must be higher, so the code must be able to run in real time.
+
+
+[Follow Line](FollowLine.md)
+<p><img src="https://raw.githubusercontent.com/sergiodomin/MOVA-Vision-Robotica-FollowLine/master/docs/src/Follow_line/F1.png" alt="Foto F1" width="200px" height="100px" /></p>
