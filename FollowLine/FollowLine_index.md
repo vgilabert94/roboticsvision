@@ -243,7 +243,7 @@ Parameters:
 
 After the work done and quite a few tests with different parameters and possible configurations, the main conclusions are:  
 
-* A *P*, *PD* and *PID* control system has been implemented. With the PD control system the timing and control is improved, but with PID no improvement can be seen.
+* A *P*, *PD* and *PID* control system has been implemented. With the *PD* control system the timing and control is improved, but with *PID* no improvement can be seen.
 * Using *kp* of the *P* controller, we can correct the error. If it is too high, it has a very sharp movement, but if it is too low, because it is so light, it cannot rotate and it crashes.
 * Using *kd* of the *PD* controller, it tries to correct the possible error of the *P* controller, but if it is too high it can affect the oscillation by increasing the oscillation with a greater abruptness.
 * With the *ki* of the *PID* controller, I have not seen a noticeable improvement. I don't know if it is a parameter problem or if it is just a comparison with the previous frame that has no effect.
