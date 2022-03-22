@@ -98,7 +98,12 @@ In this case the **speed remains constant** during the entire lap of the circuit
 | 0.01     | 6         | 1.14 min | more abrupt swing but more time on the line.                |
 
 Attached is a video trying to get a balance between lap time and fine driving on the line:
-Parameters: speed = 6 ; kp_W = 0.01
+
+Parameters:
+| speed | kp_W |
+|-------|------|
+| 6     | 0.01 |
+
 
 <p align="center">
 	<a href="https://www.youtube.com/watch?v=OrHpqVX2hmI">
@@ -127,9 +132,15 @@ In this PD control PD we have two variables *kp* and *kd* to adjust experimental
 With this control we are modifying the turn of our car, depending on the error obtained in each *frame*.
 In this case the **speed remains constant** during the entire lap of the circuit. After many tests one of the best solutions found to obtain a balance between lap time and driving on the line is the following:
 
+Parameters:
+| speed | kp_W   | Kd_W   |
+|-------|--------|--------|
+| 8     | 0.0085 | 0.0006 |
+
+
 <p align="center">
 	<a href="https://www.youtube.com/watch?v=AqDBD71PByo">
-	<img src="images/youtube_play.png" alt="youtube" width="50%"/>
+	<img src="images/youtube_play.png" alt="youtube" width="30%"/>
 	</a>
 </p>
 
@@ -156,9 +167,15 @@ In this PD control PD we have two variables *kp*, *kd* and *ki* to adjust experi
 With this control we are modifying the turn of our car, depending on the error obtained in each *frame*.
 In this case the **speed remains constant** during the entire lap of the circuit. After many tests one of the best solutions found to obtain a balance between lap time and driving on the line is the following:
 
+Parameters:
+| speed | kp_W   | Kd_W   | ki_W   |
+|-------|--------|--------|--------|
+| 7     | 0.0095 | 0.0008 | 0.0005 |
+
+
 <p align="center">
-	<a href="https://www.youtube.com/watch?v=AqDBD71PByo">
-	<img src="images/youtube_play.png" alt="youtube" width="50%"/>
+	<a href="https://www.youtube.com/watch?v=qrdgaCv90w0">
+	<img src="images/youtube_play.png" alt="youtube" width="30%"/>
 	</a>
 </p>
 
@@ -200,9 +217,15 @@ Where *min_th* is a threshold (20 px) selected by user to consider what is a str
 
 Different tests have been carried out, where the time results have been improved but not in a remarkable way. A sample video is attached:
 
+Parameters:
+| speed_min | speed_max | kp_W   | kd_W   | ki_W   | timelap |
+|-----------|-----------|--------|--------|--------|---------|
+|    5.5    |    7.5    | 0.0095 | 0.0008 | 0.0001 |  1.25	 |	
+
+
 <p align="center">
 	<a href="https://www.youtube.com/watch?v=AqDBD71PByo">
-	<img src="images/youtube_play.png" alt="youtube" width="50%"/>
+	<img src="images/youtube_play.png" alt="youtube" width="30%"/>
 	</a>
 </p>
 
