@@ -100,6 +100,9 @@ Parameters: speed = 6 ; kp_W = 0.01
 
 [![P control video](https://img.youtube.com/vi/OrHpqVX2hmI/maxresdefault.jpg)](https://www.youtube.com/watch?v=OrHpqVX2hmI)
 
+> **_NOTE:_** *Python file used in this exercise is P_control.py.*
+
+
 
 ### 5. Adding derivative control (PD)
 
@@ -118,6 +121,9 @@ With this control we are modifying the turn of our car, depending on the error o
 In this case the **speed remains constant** during the entire lap of the circuit. After many tests one of the best solutions found to obtain a balance between lap time and driving on the line is the following:
 
 [![PD control video](https://img.youtube.com/vi/AqDBD71PByo/maxresdefault.jpg)](https://www.youtube.com/watch?v=AqDBD71PByo)
+
+> **_NOTE:_** *Python file used in this exercise is PD_control.py.*
+
 
 
 ### 5. Adding Integral control (PID)
@@ -139,6 +145,8 @@ With this control we are modifying the turn of our car, depending on the error o
 In this case the **speed remains constant** during the entire lap of the circuit. After many tests one of the best solutions found to obtain a balance between lap time and driving on the line is the following:
 
 [![PID control video](https://img.youtube.com/vi/AqDBD71PByo/maxresdefault.jpg)](https://www.youtube.com/watch?v=AqDBD71PByo)
+
+> **_NOTE:_** *Python file used in this exercise is PID_control.py.*
 
 
 
@@ -168,7 +176,8 @@ Cases:
 ``` 
 Where min_th is a threshold (20 px) selected by user to consider what is a straight line. In this case, vel is the actual speed of the car. If the error speed is higher than the maximum speed, we assign new_speed = max_speed.
 
-> **_NOTE:_** *Python file used in this excersise is PID_and_speed_control.py.*
+> **_NOTE:_** *Python file used in this exercise is PID_and_speed_control.py.*
+
 
 
 ### 7. Conclusions
