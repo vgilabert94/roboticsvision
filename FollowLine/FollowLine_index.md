@@ -101,9 +101,9 @@ Attached is a video trying to get a balance between lap time and fine driving on
 
 Parameters:  
 
-| speed | kp_W |
-|-------|------|
-| 6     | 0.01 |
+| **speed** | **kp_W** |
+|:---------:|:--------:|
+|     6     |   0.01   |
 
 
 <p align="center">
