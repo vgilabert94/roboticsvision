@@ -135,9 +135,9 @@ In this case the **speed remains constant** during the entire lap of the circuit
 
 Parameters:  
 
-| speed | kp_W   | Kd_W   |
-|-------|--------|--------|
-| 8     | 0.0085 | 0.0006 |
+| **speed** | **kp_W** | **Kd_W** |
+|:---------:|:--------:|:--------:|
+|     8     |  0.0085  |  0.0006  |
 
 
 <p align="center">
@@ -171,9 +171,9 @@ In this case the **speed remains constant** during the entire lap of the circuit
 
 Parameters:  
 
-| speed | kp_W   | Kd_W   | ki_W   |
-|-------|--------|--------|--------|
-| 7     | 0.0095 | 0.0008 | 0.0005 |
+| **speed** | **kp_W**   | **Kd_W**   | **ki_W**   |
+|:---------:|:----------:|:----------:|:----------:|
+|     7     |   0.0095   |   0.0008   |   0.0005   |
 
 
 <p align="center">
@@ -222,9 +222,9 @@ Different tests have been carried out, where the time results have been improved
 
 Parameters:  
 
-| speed_min | speed_max | kp_W   | kd_W   | ki_W   | timelap |
-|-----------|-----------|--------|--------|--------|---------|
-|    5.5    |    7.5    | 0.0095 | 0.0008 | 0.0001 |  1.25	 |	
+| **speed_min** | **speed_max** |  **kp_W**  |  **kd_W**  |  **ki_W**  |
+|:-------------:|:-------------:|:----------:|:----------:|:----------:|
+|      5.5      |       7.5     |   0.0095   |   0.0008   |   0.0001   |
 
 
 <p align="center">
