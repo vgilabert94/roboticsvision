@@ -66,7 +66,7 @@ In the following image you can see in green the highest point (lowest y):
 	<img src="images/centros.png" alt="center" width="500"/>
 </p> 
 
-The other two points in blue are the image centers, i.e. our reference points. Only the highest blue point has been used for the control.
+The other two points in blue are the image centers, i.e. our reference points. Only the blue center point has been used for the control.
 
 
 
@@ -102,11 +102,10 @@ Parameters: speed = 6 ; kp_W = 0.01
 
 <p align="center">
 	<a href="https://www.youtube.com/watch?v=OrHpqVX2hmI">
-	<img src="images/youtube_play.jpg" alt="youtube" width="50%"/>
+	<img src="images/youtube_play.png" alt="youtube" width="30%"/>
 	</a>
 </p>
 
-[![P control video](https://img.youtube.com/vi/OrHpqVX2hmI/maxresdefault.jpg)](https://www.youtube.com/watch?v=OrHpqVX2hmI)
 
 > **_NOTE:_** *Python file used in this exercise is P_CONTROL.py.*
 
@@ -130,10 +129,10 @@ In this case the **speed remains constant** during the entire lap of the circuit
 
 <p align="center">
 	<a href="https://www.youtube.com/watch?v=AqDBD71PByo">
-	<img src="images/youtube_play.jpg" alt="youtube" width="50%"/>
+	<img src="images/youtube_play.png" alt="youtube" width="50%"/>
 	</a>
 </p>
-[![PD control video](https://img.youtube.com/vi/AqDBD71PByo/maxresdefault.jpg)](https://www.youtube.com/watch?v=AqDBD71PByo)
+
 
 > **_NOTE:_** *Python file used in this exercise is PD_CONTROL.py.*
 
@@ -159,11 +158,10 @@ In this case the **speed remains constant** during the entire lap of the circuit
 
 <p align="center">
 	<a href="https://www.youtube.com/watch?v=AqDBD71PByo">
-	<img src="images/youtube_play.jpg" alt="youtube" width="50%"/>
+	<img src="images/youtube_play.png" alt="youtube" width="50%"/>
 	</a>
 </p>
 
-[![PID control video](https://img.youtube.com/vi/AqDBD71PByo/0.jpg)](https://www.youtube.com/watch?v=AqDBD71PByo)
 
 > **_NOTE:_** *Python file used in this exercise is PID_CONTROL.py.*
 
@@ -204,7 +202,7 @@ Different tests have been carried out, where the time results have been improved
 
 <p align="center">
 	<a href="https://www.youtube.com/watch?v=AqDBD71PByo">
-	<img src="images/youtube_play.jpg" alt="youtube" width="50%"/>
+	<img src="images/youtube_play.png" alt="youtube" width="50%"/>
 	</a>
 </p>
 
