@@ -13,7 +13,7 @@
 The objective of this practice is to develop a system to try to control a car over a red line on the road.
 
 <p align="center">
-  <img src="images/road_red_line.png" alt="img_ori" width="500"/>
+	<img src="images/road_red_line.png" alt="img_ori" width="500"/>
 </p>
 
 You have to try to go as long as possible over the red line and avoid uncontrolled rolling of the car. This can be achieved with different PID control approaches.
@@ -56,19 +56,14 @@ For our problem, being a fairly controlled case, we will detect the red line wit
 The result of this function for each *frame*, will be a result similar to the following:
 
 <p align="center">
-	<a href="https://www.google.es/">
 	<img src="images/hsv_filter.png" alt="mask" width="500"/>
-	</a>
 </p>
-
-[Prueba](https://www.google.es/)
-<p><img src="images/hsv_filter.png" alt="Foto F1" width="200px" height="100px" /></p>
 
 Once we have the mask containing the red color information, the contours of the image have been obtained. From the obtained contours have been filtered by size, to avoid possible small contours that affect us and thus robust the system. Using the contour with the largest area, we have obtained the highest point, i.e. the one with the smallest y-coordinate. 
 In the following image you can see in green the highest point (lowest y):
 
 <p align="center">
-  <img src="images/centros.png" alt="center" width="500"/>
+	<img src="images/centros.png" alt="center" width="500"/>
 </p> 
 
 The other two points in blue are the image centers, i.e. our reference points. Only the highest blue point has been used for the control.
@@ -105,6 +100,12 @@ In this case the **speed remains constant** during the entire lap of the circuit
 Attached is a video trying to get a balance between lap time and fine driving on the line:
 Parameters: speed = 6 ; kp_W = 0.01
 
+<p align="center">
+	<a href="https://www.youtube.com/watch?v=OrHpqVX2hmI">
+	<img src="images/youtube_play.jpg" alt="youtube" width="50%"/>
+	</a>
+</p>
+
 [![P control video](https://img.youtube.com/vi/OrHpqVX2hmI/maxresdefault.jpg)](https://www.youtube.com/watch?v=OrHpqVX2hmI)
 
 > **_NOTE:_** *Python file used in this exercise is P_CONTROL.py.*
@@ -127,6 +128,11 @@ In this PD control PD we have two variables *kp* and *kd* to adjust experimental
 With this control we are modifying the turn of our car, depending on the error obtained in each *frame*.
 In this case the **speed remains constant** during the entire lap of the circuit. After many tests one of the best solutions found to obtain a balance between lap time and driving on the line is the following:
 
+<p align="center">
+	<a href="https://www.youtube.com/watch?v=AqDBD71PByo">
+	<img src="images/youtube_play.jpg" alt="youtube" width="50%"/>
+	</a>
+</p>
 [![PD control video](https://img.youtube.com/vi/AqDBD71PByo/maxresdefault.jpg)](https://www.youtube.com/watch?v=AqDBD71PByo)
 
 > **_NOTE:_** *Python file used in this exercise is PD_CONTROL.py.*
@@ -150,6 +156,12 @@ In this PD control PD we have two variables *kp*, *kd* and *ki* to adjust experi
 
 With this control we are modifying the turn of our car, depending on the error obtained in each *frame*.
 In this case the **speed remains constant** during the entire lap of the circuit. After many tests one of the best solutions found to obtain a balance between lap time and driving on the line is the following:
+
+<p align="center">
+	<a href="https://www.youtube.com/watch?v=AqDBD71PByo">
+	<img src="images/youtube_play.jpg" alt="youtube" width="50%"/>
+	</a>
+</p>
 
 [![PID control video](https://img.youtube.com/vi/AqDBD71PByo/0.jpg)](https://www.youtube.com/watch?v=AqDBD71PByo)
 
@@ -190,6 +202,11 @@ Where *min_th* is a threshold (20 px) selected by user to consider what is a str
 
 Different tests have been carried out, where the time results have been improved but not in a remarkable way. A sample video is attached:
 
+<p align="center">
+	<a href="https://www.youtube.com/watch?v=AqDBD71PByo">
+	<img src="images/youtube_play.jpg" alt="youtube" width="50%"/>
+	</a>
+</p>
 
 
 > **_NOTE:_** *Python file used in this exercise is PID_CONTROL_SPEED_CASE.py.*
@@ -206,7 +223,3 @@ After the work done and quite a few tests with different parameters and possible
 * With the ki of the PID controller, I have not seen a noticeable improvement. I don't know if it is a parameter problem or if it is just a comparison with the previous frame that has no effect.
 
 As a general conclusion it is necessary to look for a balance between the speed of the car and that the car goes as much as possible along the line. In my case I have tried to make the car go a little faster, even if it spends less time on the line. As the speed increases, the processor speed must be higher, so the code must be able to run in real time.
-
-
-[Follow Line](FollowLine.md)
-<p><img src="https://raw.githubusercontent.com/sergiodomin/MOVA-Vision-Robotica-FollowLine/master/docs/src/Follow_line/F1.png" alt="Foto F1" width="200px" height="100px" /></p>
