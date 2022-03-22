@@ -141,7 +141,7 @@ Parameters:
 
 
 <p align="center">
-	<a href="https://www.youtube.com/watch?v=AqDBD71PByo">
+	<a href="https://www.youtube.com/watch?v=AqDBD71PByo" target="_blank">
 	<img src="images/youtube_play.png" alt="youtube" width="30%"/>
 	</a>
 </p>
@@ -177,7 +177,7 @@ Parameters:
 
 
 <p align="center">
-	<a href="https://www.youtube.com/watch?v=qrdgaCv90w0">
+	<a href="https://www.youtube.com/watch?v=qrdgaCv90w0" target="_blank">
 	<img src="images/youtube_play.png" alt="youtube" width="30%"/>
 	</a>
 </p>
@@ -218,7 +218,7 @@ def adjust_vel(error, vel):
 ``` 
 Where *min_th* is a threshold (20 px) selected by user to consider what is a straight line. In this case, *vel* is the actual speed of the car. If the error speed is higher than the maximum speed, we assign new_speed = max_speed.
 
-Different tests have been carried out, where the time results have been improved but not in a remarkable way. A sample video is attached:
+Different tests have been carried out but no solution has been found to improve the time of previous exercises. A sample video is attached:
 
 Parameters:  
 
@@ -228,7 +228,7 @@ Parameters:
 
 
 <p align="center">
-	<a href="https://www.youtube.com/watch?v=Bxno-UfDaz0">
+	<a href="https://www.youtube.com/watch?v=Bxno-UfDaz0" target="_blank">
 	<img src="images/youtube_play.png" alt="youtube" width="30%"/>
 	</a>
 </p>
