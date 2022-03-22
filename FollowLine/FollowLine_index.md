@@ -241,10 +241,11 @@ Parameters:
 
 ### 7. Conclusions
 
-After the work done and quite a few tests with different parameters and possible configurations, the main conclusions are:A P, PD and PID control system has been implemented. With the PD control system the timing and control is improved, but with PID no improvement can be seen.
+After the work done and quite a few tests with different parameters and possible configurations, the main conclusions are:  
 
-* Using kp of the P controller, we can correct the error. If it is too high, it has a very sharp movement, but if it is too low, because it is so light, it cannot rotate and it crashes.
-* Using kd of the PD controller, it tries to correct the possible error of the P controller, but if it is too high it can affect the oscillation by increasing the oscillation with a greater abruptness.
-* With the ki of the PID controller, I have not seen a noticeable improvement. I don't know if it is a parameter problem or if it is just a comparison with the previous frame that has no effect.
+* A *P*, *PD* and *PID* control system has been implemented. With the PD control system the timing and control is improved, but with PID no improvement can be seen.
+* Using *kp* of the *P* controller, we can correct the error. If it is too high, it has a very sharp movement, but if it is too low, because it is so light, it cannot rotate and it crashes.
+* Using *kd* of the *PD* controller, it tries to correct the possible error of the *P* controller, but if it is too high it can affect the oscillation by increasing the oscillation with a greater abruptness.
+* With the *ki* of the *PID* controller, I have not seen a noticeable improvement. I don't know if it is a parameter problem or if it is just a comparison with the previous frame that has no effect.
 
 As a general conclusion it is necessary to look for a balance between the speed of the car and that the car goes as much as possible along the line. In my case I have tried to make the car go a little faster, even if it spends less time on the line. As the speed increases, the processor speed must be higher, so the code must be able to run in real time.
