@@ -56,8 +56,10 @@ For our problem, being a fairly controlled case, we will detect the red line wit
 The result of this function for each *frame*, will be a result similar to the following:
 
 <p align="center">
-  <img src="images/hsv_filter.png" alt="mask" width="500"/>
-</p> 
+	<a href="https://www.google.es/">
+	<img src="images/hsv_filter.png" alt="mask" width="500"/>
+	</a>
+</p>
 
 Once we have the mask containing the red color information, the contours of the image have been obtained. From the obtained contours have been filtered by size, to avoid possible small contours that affect us and thus robust the system. Using the contour with the largest area, we have obtained the highest point, i.e. the one with the smallest y-coordinate. 
 In the following image you can see in green the highest point (lowest y):
@@ -66,7 +68,9 @@ In the following image you can see in green the highest point (lowest y):
   <img src="images/centros.png" alt="center" width="500"/>
 </p> 
 
-The other two points in blue are the image centers, i.e. our reference points.
+The other two points in blue are the image centers, i.e. our reference points. Only the highest blue point has been used for the control.
+
+
 
 ### 4. Proportional Control (P)
 
@@ -100,7 +104,7 @@ Parameters: speed = 6 ; kp_W = 0.01
 
 [![P control video](https://img.youtube.com/vi/OrHpqVX2hmI/maxresdefault.jpg)](https://www.youtube.com/watch?v=OrHpqVX2hmI)
 
-> **_NOTE:_** *Python file used in this exercise is P_control.py.*
+> **_NOTE:_** *Python file used in this exercise is P_CONTROL.py.*
 
 
 
@@ -122,7 +126,7 @@ In this case the **speed remains constant** during the entire lap of the circuit
 
 [![PD control video](https://img.youtube.com/vi/AqDBD71PByo/maxresdefault.jpg)](https://www.youtube.com/watch?v=AqDBD71PByo)
 
-> **_NOTE:_** *Python file used in this exercise is PD_control.py.*
+> **_NOTE:_** *Python file used in this exercise is PD_CONTROL.py.*
 
 
 
@@ -144,9 +148,9 @@ In this PD control PD we have two variables *kp*, *kd* and *ki* to adjust experi
 With this control we are modifying the turn of our car, depending on the error obtained in each *frame*.
 In this case the **speed remains constant** during the entire lap of the circuit. After many tests one of the best solutions found to obtain a balance between lap time and driving on the line is the following:
 
-[![PID control video](https://img.youtube.com/vi/AqDBD71PByo/maxresdefault.jpg)](https://www.youtube.com/watch?v=AqDBD71PByo)
+[![PID control video](https://img.youtube.com/vi/AqDBD71PByo/0.jpg)](https://www.youtube.com/watch?v=AqDBD71PByo)
 
-> **_NOTE:_** *Python file used in this exercise is PID_control.py.*
+> **_NOTE:_** *Python file used in this exercise is PID_CONTROL.py.*
 
 
 
@@ -159,24 +163,34 @@ error = pto_ref - pto_actual
 ```
 Where pto_ref is the x-coordinate of the center point of the image and pto_actual is the x-coordinate of point a of the current *frame*.
 
-Cases:
+The speed will be variable within two ranges, speed_max and speed_min. The function to adjust the speed in the curves is as follows:
 
-```
+```python
+def adjust_vel(error, vel):
+    error = abs(error)
+    
     if error > min_th and error < min_th+20:
-        new_speed = vel - vel*0.002
-		
+        new_speed = vel - vel*0.001
     elif error >= min_th+20 and error < min_th+40:
-        new_speed = vel - vel*0.004
-		
+        new_speed = vel - vel*0.003
     elif error >= min_th+40 and error < min_th+60:
         new_speed = vel - vel*0.006
-		
     elif error >= min_th+60:
-        new_speed = vel - vel*0.008
+        new_speed = vel - vel*0.009
+    
+    if new_speed < speed_min:
+        new_speed = speed_min
+    
+    return new_speed
 ``` 
-Where min_th is a threshold (20 px) selected by user to consider what is a straight line. In this case, vel is the actual speed of the car. If the error speed is higher than the maximum speed, we assign new_speed = max_speed.
+Where *min_th* is a threshold (20 px) selected by user to consider what is a straight line. In this case, *vel* is the actual speed of the car. If the error speed is higher than the maximum speed, we assign new_speed = max_speed.
 
-> **_NOTE:_** *Python file used in this exercise is PID_and_speed_control.py.*
+Different tests have been carried out, where the time results have been improved but not in a remarkable way. A sample video is attached:
+
+
+
+> **_NOTE:_** *Python file used in this exercise is PID_CONTROL_SPEED_CASE.py.*
+
 
 
 
