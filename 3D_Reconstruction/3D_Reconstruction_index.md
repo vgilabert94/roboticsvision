@@ -159,7 +159,9 @@ With these points and the centers of the cameras, we obtain the vectors to perfo
 
 Where n is the vector product of both vectors. The result of the least squares will be alpha and beta that we will use to obtain the final point in 3D.
 
-> Using **numpy.linalg.lstsq(A, b)** to solve the system Ax=b. Where A = [v1, n, -v2].T and b = C2 - C1
+> Using **numpy.linalg.lstsq(A, b)** to solve the system Ax=b. Where A = [v1, n, -v2].T and b = C2 - C1  
+
+
 > **_NOTE:_** *The function developed to obtain the above result is: compute_3Dpoint(point, ray_LH)*
 
 
