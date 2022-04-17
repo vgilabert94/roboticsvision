@@ -150,7 +150,7 @@ Con estos puntos y los centros de las cámaras, se obtienen los vectores para re
 </p>
 
 <p align="center">
-	<img src="images/equation.png" alt="triangulation" width="70%"/>
+	<img src="images/equation.png" alt="triangulation" width="40%"/>
 </p>
 
 Donde n es el producto vectorial de ambos vectores. El resultado de los minimos cuadrados será alpha y beta que usaremos para obtener el punto final en 3D.
