@@ -154,13 +154,25 @@ With these points and the centers of the cameras, we obtain the vectors to perfo
 </p>
 
 <p align="center">
-	<img src="images/equation.png" alt="triangulation" width="40%"/>
+	<img src="images/equation2.png" alt="triangulation" width="60%"/>
 </p>
 
-Where n is the vector product of both vectors. The result of the least squares will be alpha and beta that we will use to obtain the final point in 3D.
+Equation system to solve using Least-Squares:
 
-> Using **numpy.linalg.lstsq(A, b)** to solve the system Ax=b. Where A = [v1, n, -v2].T and b = C2 - C1  
+<p align="center">
+	<img src="images/equation3.png" alt="triangulation" width="60%"/>
+</p>
 
+Where n is the vector product of both vectors.
+
+> Using **numpy.linalg.lstsq(A, b)** to solve the system Ax=b. Where A = [v1, n, -v2].T and b = C2 - C1.
+
+
+The result of the least squares will be alpha and beta that we will use to obtain the final point in 3D.
+
+<p align="center">
+	<img src="images/equation4.png" alt="triangulation" width="60%"/>
+</p>
 
 > **_NOTE:_** *The function developed to obtain the above result is: compute_3Dpoint(point, ray_LH)*
 
