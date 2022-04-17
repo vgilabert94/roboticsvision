@@ -8,120 +8,124 @@
 
 
 ### 1. Introduction
-En este trabajo se va a realizar una reconstrucción 3D utilizando un robot (kobuki) con visión estereoscópica. La reconstrucción 3D es el proceso de determinar el perfil 3D de un objeto, así como conocer la coordenada 3D de cualquier punto del perfil. 
+In this work a 3D reconstruction is going to be performed using a robot (kobuki) with stereoscopic vision. 3D reconstruction is the process of determining the 3D profile of an object, as well as knowing the depth of the points of the scene.
 
-En nuestro caso la reconstrucción se va a realizar basada en software.  Este enfoque se basa en la capacidad de cálculo del ordenador para determinar las propiedades 3D del objeto mediante dos imágenes de la escena obtenidas cámaras en diferente posición. Utilizaremos la geometría epipolar con las propiedades y restricciones que nos aporta, poder realizar la triangulación de las dos imágenes en un punto y obtener la profundidad del punto. 
+In our case the reconstruction is going to be performed based on software.  This approach is based on the computational power of the computer to determine the 3D properties of the object using two images of the scene obtained from cameras in different positions. We will use the epipolar geometry with the properties and restrictions that it gives us, to be able to triangulate the two images at a point and obtain the depth of the point. 
 
-A continuación, se muestra una imagen de la escena a reconstruir con los diversos objetos en ella: 
+Below is an image of the scene to be reconstructed with the various objects in it: 
 
 <p align="center">
 	<img src="images/introduccion.png" alt="img_ori" width="70%"/>
 </p>
 
-La siguiente imagen muestra la vista de cada camara del robot, que es la informacion que tenemos para realizar la reconstruccion 3D.
+The following image shows the view of each camera of the robot, which is the information we have to perform the 3D reconstruction.
 
 <p align="center">
 	<img src="images/camaras.png" alt="img_ori" width="70%"/>
 </p>
 
-Tenemos que revisar algunas de la funcion y metodos que nos proporciona la plataforma JdeRobotics para la implementacion de la solucion. A continuacion se exponen los que se van a utilizar:
+We have to review some of the functions and methods provided by the JdeRobotics platform for the implementation of the solution. The following are the ones that will be used:
 
-* Obtención de imagen de la cámara indicada:
+* Image acquisition of the indicated camera:
   ```python
   HAL.getImage('left')
   ```
 
-* Mostrar imagen y mostrar multiples imagenes:
+* Show one image and show multiple images:
   ```python
   GUI.showImage(img)
   GUI.showImages(edgesLH, edgesRH, True)
   ```
 
-* Cambio de coordenadas de la imagen a coordenadas de la cámara:
+* Change from image coordinates to camera coordinates:
   ```python
-  HAL.graficToOptical('left',point2d_homogeneous)
+  HAL.graficToOptical('left', point2d_homogeneous)
   ```
 
-* Cambio de coordenadas de la cámara a coordenadas de la imagen:
+* Change from camera coordinates to image coordinates:
   ```python
-  HAL.opticalToGrafic('left',point3d_homogeneous)
+  HAL.opticalToGrafic('left', point3d_homogeneous)
   ```
 
-* Calcular la proyección de un punto 3d a un plano imagen:
+* Calculate the projection of a 3d point to an image plane:
   ```python
   HAL.project('left', point3d)
   ```
 
-* Calcula la linea de retroproyección con un punto 2D (imagen):
+* Calculates the back projection line with a 2D point (image):
   ```python
   HAL.backproject('left',point2d)
   ```
 
-* Convertir un punto 3D del eje de coordenadas a un punto 3D de la escena:
+* Transform 3D Point Space after triangulation to the 3D Point Viewer:
   ```python
   HAL.project3DScene(point3d)
   ```
 
+To have an overview of the algorithm created to solve the 3D reconstruction problem, the following scheme is attached:
 
-### 2. Preprocesado
+<p align="center">
+	<img src="images/diagram.png" alt="img_ori" width="100%"/>
+</p>
 
-Para poder realizar la reconstruccion 3D, el primer paso seria obtener puntos característicos para realacionarlos en las dos imágenes.
-En algunos casos se pueden utilizar caracteristicas extraidas mediante descriptores como SIFT o ORB. 
+---
+### 2. Preprocessing
 
+In order to perform the 3D reconstruction, the first step would be to obtain features points to match them in the two images.
+In some cases you can use features extracted using descriptors such as SIFT or ORB. 
 
-En nuestro caso se van a utilizar los bordes (frecuencias altas) de las imágenes para conseguir los puntos caracteriscos de ambas imagenes y calcular la relación entre ellas. Para ello usaremos un filtrado de bordes Canny que nos deja la imagen filtrada con los bordes bastante finos. Se utiliza un filtrado bilateral para homogeneizar la imagen y evitar el posible ruido.
+In our case we are going to use the edges (high frequencies) of the images to get the features of both images and calculate the relationship between them. For this we will use a Canny edge filtering that leaves the filtered image with quite fine edges. Bilateral filtering is used to homogenize the image and avoid possible noise.
 
 <p align="center">
 	<img src="images/edges.png" alt="edges" width="100%"/>
 </p>
 
-> **_NOTA:_** *La función desarrollada para obtener el resultado anterior es: get_edges(img, sigma=0.33)*
+> **_NOTE:_** *The function developed to obtain the above result is: get_edges(img, sigma=0.33)*
 
+---
+### 3. 2D point selection
 
-### 3. Selección de los puntos 2D
+Once we have the edge images that we have seen in the previous point, we obtain the coordinates of the pixels different than 0 value, so we return the position (Y,X) of each characteristic point.
 
-Una vez tenemos las imágenes de bordes que hemos visto en el punto anterior, se obtienen las coordenadas de los píxeles diferentes a un valor 0 por lo que se devuelve es la posicion (Y,X) de cada punto caracteristico.
+Using the bilateral filtering that we have discussed, we manage to reduce the large number of feature points. Because each time it has been tested we get about 12000-18000 feature points to process and get the corresponding 3D point.  
 
-Utilizando el filtrado bilateral que hemos comentado, conseguimos reducir la gran cantidad de puntos caracteriticos. Debido a que cada vez que se ha probado obtenemos alrededor de 12000-18000 puntos característicos para procesar y obtener el punto correcpondiente en 3D.  
+To avoid processing the large amount of points, we implement the option of random selection of feature points using the variable N which applies a filtering to keep a percentage of feature points. In this step you can set the parameter N (values >0 and up to 1) which is a percentage to filter all points, where a value of 1 means that there is no filtering and all points are selected and a value of 0.5 means that **randomly** we are left with half of the points.
 
-Para evitar procesar la gran cantidad de puntos, se implementa la opción de selección aleatoria de puntos característicos usando la variable N que aplica un filtrado para quedarnos con un porcentage de puntos característicos. En este paso se puede configurar el parámetro N (valores >0 y hasta 1) que es un porcentaje para filtrar todos los puntos, donde un valor de 1 significa que no haya filtrado y se seleccionen todos los puntos y un valor de 0.5 significa que **aleatoriamente** nos quedamos con la mitad de los puntos.
+The result will be an array of dimensions (total_points, 2).
 
-El resultado sera un array de dimensiones (total_points, 2).
+> **_NOTE:_** *The function developed to obtain the above result is: get_pixels_to_match(img, N=1)*
 
-> **_NOTA:_** *La función desarrollada para obtener el resultado anterior es: get_pixels_to_match(img, N=1)*
+---
+### 4. Calculation of epipolar.
 
+Using the feature points obtained in the previous section, which are 2D points in image coordinates, the calculation of the epipolar line will be performed to try to find the homologous pixel in the right image.
 
-### 4. Cálculo de la epipolar.
+Having a pixel in an image it is not possible to obtain a point in 3D space, but by backprojecting from the center of the camera (O1) to the pixel (p) in camera coordinates we get a line that can be useful to continue with our problem.
 
-Utilizando los puntos característicos obtenidos en el apartado anterior, que son puntos 2D en coordenadas imagen, se va a realizar el cálculo de la linea epipolar para tratar de encontrar el pixel homólogo en la imagen derecha.
+With the obtained line (O1, p), we can project the line on the right camera obtaining the epipolar line (e', p').
 
-Teniendo un pixel en una imagen no se puede llegar a obtener un punto en el espacio 3D, pero retroproyectando desde el centro de la cámara (O1) al pixel (p) en coordenadas de cámara conseguimos una recta que ya  nos puede ser util para seguir con nuestro problema.
-
-Con la recta obtenida (O1, p), podemos proyectar la recta en la cámara derecha obteniendo la linea epipolar (e', p').
-
-La linea epipolar nos indica la posición en la que debe estar el pixel de la imagen izquierda en la imagen derecha. 
-No nos indica un punto sino una recta, que consigue hacer un gran restricción del problema ya que debemos buscar la coincidencia en esta linea.
+The epipolar line indicates the position where the pixel of the left image should be in the right image.  It does not indicate a point but a straight line, which makes a great restriction of the problem since we must look for the match in this line.
 
 <p align="center">
 	<img src="images/epipolar.png" alt="edges" width="80%"/>
 </p>
 
-> **_NOTA:_** *La función desarrollada para obtener el resultado anterior es: get_epipolar(cam, ray, imgSize, ksize=9)*
+> **_NOTE:_** *The function developed to obtain the above result is: get_epipolar(cam, ray, imgSize, ksize=9)*
 
+---
+### 5. Find the match.
 
-### 5. Encontrar el homólogo.
+With the epipolar line obtained in the previous section, we are going to perform a template matching of a locality of the pixel in the left image for each pixel included in the epipolar line obtained.
 
-Con la recta epipolar obtenida en el apartado anterior, se va a realizar un *template matching* de una localidad del pixel de la image izquierda en cada pixel comprendido en la linea epipolar obtenida.
-
-Utilizando una funcion de OpenCV para realizar el *matching* (cv2.matchTemplate) con la configuración de correlación cruzada media desplazada (cv2.TM_CCOEFF_NORMED), se recorre la linea epipolar obtenida para encontrar el mejor *match* para la localidad de la imagen de la izquierda.
+Using an OpenCV function for matching (cv2.matchTemplate) with the shifted mean cross-correlation setting (cv2.TM_CCOEFF_NORMED), the obtained epipolar line is run to find the best match for the left image.
 
 <p align="center">
 	<img src="images/TM_CCOEFF_NORMED.png" alt="CCOEFF" width="100%"/>
 </p>
 
-Para optimizar el procesado y no buscar en toda la imagen, se realizar un recorte de la imagen donde solo pasamos a la función las filas donde sabemos que se debe situar el pixel por las restricciones epipolares.
+To optimize the processing and not to search the whole image, a cropping of the image is performed where we only pass to the function the rows where we know that the pixel should be placed due to the epipolar restrictions.
 
-Ejemplo:
+Example:
 ```python
 epipolar_line = 200
 k_size = 11
@@ -130,20 +134,20 @@ k_half = floor(k_size/2)
 
 img_crop = img[epi-k_half-margen:epi+k_half+margen+1, :, :]
 ```
-La dimensión que obtendriamos de este recorte seria (14, 640, 3).
+The dimension obtained from this cropping would be (14, 640, 3).
 
-Nos quedamos con el pixel 2D que mayor valor de parecido ha obtenido si supera un umbral de *0,9*. En caso de no superar no se guardará dicho punto.
+We keep the 2D pixel with the highest similarity value obtained if it exceeds a threshold of 0.9. If it does not exceed this threshold, this point will not be saved.
 
-Ahora mismo con un *match* superior a *0,9*, tendriamos ya los pixeles en ambas imágenes por lo que nos quedaria encontrar la posición 3D que buscamos.
+Right now with a match higher than 0,9, we would already have the pixels in both images so we would have to find the 3D position we are looking for.
 
-> **_NOTA:_** *La función desarrollada para obtener el resultado anterior es: find_best_similar(point, imgLH, imgRH, epi_line, ksize=9):*
+> **_NOTE:_** *The function developed to obtain the above result is: find_best_similar(point, imgLH, imgRH, epi_line, ksize=9):*
 
+---
+### 6. 3D point calculation.
 
-### 6. Calculo del punto en 3D. 
+Once we have a point in the left image and its counterpart in the right image, we can perform the triangulation to obtain the 3D point.
 
-Una vez tenemos un punto en la imagen izquierda y su homólogo en la imagen derecha, podemos realizar la triangulación para obtener el punto 3D.
-
-Con estos puntos y los centros de las cámaras, se obtienen los vectores para realizar la triangulación. Estos vectores en 3D es difícil que lleguen a tocarse, por lo que es necesario resolverlo mediante mínimos cuadrados para obtener el punto medio del vector normal a ambos rayos. 
+With these points and the centers of the cameras, we obtain the vectors to perform the triangulation. These 3D vectors are difficult to touch, so it is necessary to solve it by least squares to obtain the midpoint of the normal vector to both rays.
 
 <p align="center">
 	<img src="images/triangulation.jpg" alt="triangulation" width="80%"/>
@@ -153,20 +157,33 @@ Con estos puntos y los centros de las cámaras, se obtienen los vectores para re
 	<img src="images/equation.png" alt="triangulation" width="40%"/>
 </p>
 
-Donde n es el producto vectorial de ambos vectores. El resultado de los minimos cuadrados será alpha y beta que usaremos para obtener el punto final en 3D.
+Where n is the vector product of both vectors. The result of the least squares will be alpha and beta that we will use to obtain the final point in 3D.
 
-> Usamos **numpy.linalg.lstsq(A, b)** para resolver el sistema Ax=b. Donde A = [ray_LH, n, -ray_RH].T y b = C_2 - C_1
-
-
-### 7. Resultados y conclusiones.
+> Using **numpy.linalg.lstsq(A, b)** to solve the system Ax=b. Where A = [v1, n, -v2].T and b = C2 - C1
+> **_NOTE:_** *The function developed to obtain the above result is: compute_3Dpoint(point, ray_LH)*
 
 
+---
+### 7. Results and conclusions.
+
+Attached are some images with the results obtained:
+
+* Result using kernek size 21.
+<p align="center">
+	<img src="images/result1.png" alt="triangulation" width="100%"/>
+</p>
+
+Here is a link to see a run (video speed up x2) of the reconstruction with our algorithm:
 
 <p align="center">
-	<a href="https://www.youtube.com/watch?v=Bxno-UfDaz0" target="_blank">
+	<a href="https://www.youtube.com/watch?v=lvjwnNlHUUk" target="_blank">
 	<img src="images/youtube_play.png" alt="youtube" width="30%"/>
 	</a>
 </p>
 
+As conclusions, we can say that by using the edges as feature points the reconstruction achieved is of the edges. The result is quite good, since we get the desired edges and with the depth that touches for the various objects.
+A factor against is the computation time, which is very far from the real time, so it complicates the use in a real robot. The processing could be parallelized to try to reduce this time.
 
-> **_NOTE:_** *El fichero python completo es: file.py.*
+It has been good practice to experiment with 3D reconstruction of a scene with a stereo pair of cameras. By working on it, the concepts studied in the theoretical part of the 3D Vision course have been consolidated.
+
+> **_NOTE:_** *The final python file is: 3d_reconstruction.py*
