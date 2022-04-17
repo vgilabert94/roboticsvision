@@ -117,7 +117,7 @@ The epipolar line indicates the position where the pixel of the left image shoul
 
 With the epipolar line obtained in the previous section, we are going to perform a template matching of a locality of the pixel in the left image for each pixel included in the epipolar line obtained.
 
-Using an OpenCV function for matching (cv2.matchTemplate) with the shifted mean cross-correlation setting (cv2.TM_CCOEFF_NORMED), the obtained epipolar line is run to find the best match for the left image.
+Using an OpenCV function for matching (cv2.matchTemplate) with the shifted mean cross-correlation setting (cv2.TM_CCOEFF_NORMED), the obtained epipolar line is run to find the best match for the left image. We use the images converted to the HSV color space for better color matching, as this space is more robust and invariant to illumination.
 
 <p align="center">
 	<img src="images/TM_CCOEFF_NORMED.png" alt="CCOEFF" width="100%"/>
