@@ -154,7 +154,7 @@ With these points and the centers of the cameras, we obtain the vectors to perfo
 </p>
 
 <p align="center">
-	<img src="images/equation2.png" alt="triangulation" width="60%"/>
+	<img src="images/equation2.png" alt="triangulation" width="40%"/>
 </p>
 
 Equation system to solve using Least-Squares:
