@@ -149,14 +149,13 @@ Con estos puntos y los centros de las cámaras, se obtienen los vectores para re
 	<img src="images/triangulation.jpg" alt="triangulation" width="80%"/>
 </p>
 
-$$ v_1 = p_1 - C_1 $$
-$$ v_2 = p_2 - C_2 $$
+<p align="center">
+	<img src="images/equation.png" alt="triangulation" width="700%"/>
+</p>
 
-$$ 3d_point = C_1 + \alpha_1 · v_1  + \frac{1}{2} · \beta · n$$
+Donde n es el producto vectorial de ambos vectores. El resultado de los minimos cuadrados será alpha y beta que usaremos para obtener el punto final en 3D.
 
-Donde $n = v1 x v2$ es el producto vectorial de ambos vectores. El resultado de los minimos cuadrados sera alpha y beta que usaremos para obtener el punto final en 3D.
-
-> Usamos **numpy.linalg.lstsq(A, b)** para resolver el sistema Ax=b. Donde A = $A = [ray_LH, n, -ray_RH].T$ y $b = C_2 - C_1$
+> Usamos **numpy.linalg.lstsq(A, b)** para resolver el sistema Ax=b. Donde A = [ray_LH, n, -ray_RH].T y b = C_2 - C_1
 
 
 ### 7. Resultados y conclusiones.
