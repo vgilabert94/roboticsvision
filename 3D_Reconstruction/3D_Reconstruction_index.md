@@ -127,12 +127,12 @@ To optimize the processing and not to search the whole image, a cropping of the 
 
 Example:
 ```python
-epipolar_line = 200
-k_size = 11
-margen = 2
-k_half = floor(k_size/2)
+epi = 200 		#epipolar_line
+k_size = 11		#kernel size
+m = 2			#margin
+k_half = floor(k_size/2)	#Half of kernel size.
 
-img_crop = img[epi-k_half-margen:epi+k_half+margen+1, :, :]
+img_crop = img[epi-k_half-m:epi+k_half+m+1, :, :]
 ```
 The dimension obtained from this cropping would be (14, 640, 3).
 
