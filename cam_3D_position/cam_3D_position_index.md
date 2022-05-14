@@ -38,7 +38,7 @@ To run the program, the files and possible configurations are described below:
 
   The script parameters are as follows: 
   
-  |  -  |       --        | Description                                                                     |
+  |  -  |       - -       | Description                                                                     |
   |:---:|:---------------:|:-------------------------------------------------------------------------------:|
   | -f  | --folder        | Path to folder with images to calibrate camera.                                 |
   | -sh | --chess_shape   | Shape. Number of rows and columns to detect in chessboard.  Default=(9,6)       |
@@ -55,7 +55,7 @@ To run the program, the files and possible configurations are described below:
   
   The script parameters are as follows: 
   
-  |  -  |       --        |                                                 Description                                                 |
+  |  -  |       - -       |                                                 Description                                                 |
   |:---:|:---------------:|:-----------------------------------------------------------------------------------------------------------:|
   | -c  | --camera_params |                           Path to file with camera calibration parameters (NPY).                            |
   | -s  | --showResult    |                    If flag is sent, the display of detection is activated. Default=False                    |
