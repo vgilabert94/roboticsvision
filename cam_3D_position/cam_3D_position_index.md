@@ -30,6 +30,7 @@ To run the program, the files and possible configurations are described below:
   pip install -r requirements.txt
   ```
 
+
 * To perform the camera calibration, the script **camera_calibration.py** has been implemented:
   ```
   python camera_calibration.py --folder images_Calibration/ --chess_shape (9,6) --chess_size 24
@@ -46,12 +47,13 @@ To run the program, the files and possible configurations are described below:
   | -p  | --plot_cameras  | Activate flag to 3D plot of all cameras positions.                              |
 
 
+
 * To run the main application for tag detection and position calculation is **get_position.py**:
   ```
   python .\get_position.py -c results_calibration/parameters_20220514_123408.npy -id http://192.168.100.74:4747/video -s -p
   ```
   
-  Los parámetros para script son los siguientes:
+  The script parameters are as follows: 
   
   |  -  |       --        |                                                 Description                                                 |
   |:---:|:---------------:|:-----------------------------------------------------------------------------------------------------------:|
