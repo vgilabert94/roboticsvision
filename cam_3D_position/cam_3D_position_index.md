@@ -24,10 +24,10 @@ Todo el proceso anterior, es dependiente de la calibracion de la cámara. Debemo
 Para ejecutar el programa se describen a continuacion los archivos y las posibles configuraciones:
 
 
-* Se ha utlizado un repositorio en python con bindings a la libreria apriltags (C). Solo funciona con Python 3.6 y 3.7. 
+* Se ha utlizado un repositorio en python con bindings a la libreria apriltags (C). Solo funciona con Python 3.6 y 3.7. Instalamos todas las librerias necesiaras que vienen en el archivo de requerimeintos.
   ````
   python -m pip install --upgrade pip
-  pip install pupil-apriltags 
+  pip install -r requirements.txt
   ````
 
 * Para realizar la calibración de la cámara se ha implentado el script camera_calibration.py:
@@ -67,6 +67,8 @@ Para ejecutar el programa se describen a continuacion los archivos y las posible
 
 Para el objetivo de este trabajo es necesario realizar una calibracion de la camara para obtener los parametros intrinsecos (K) de la camara.
 
+> python camera_calibration.py --folder images_Calibration/ --chess_shape (9,6) --chess_size 24
+
 Se ha utilizado una imagen de ejedrez de un tamaño (9,6) esquinas y un tamaño de cuadrado de 24mm. El total de imagenes utilizadas para  la calibracion es de 48. A continuacion se pueden ver algunas de estas imagenes:
 
 <p align="center">
@@ -76,10 +78,10 @@ Se ha utilizado una imagen de ejedrez de un tamaño (9,6) esquinas y un tamaño 
 Con el script explicado en punto anterior, se ha realizado nuestra calibracion. El proceso implementado ha sido:
 
 1. Cargar las imagenes para la calibracion.
-2. Para cada imagen realizar una deteccion de esquinas. $\rightarrow$ ```cv2.findChessboardCorners```
-3. Refinar el resultado obtenido para aumentar la precision. $\rightarrow$ ```cv2.cornerSubPix```
-4. Definir los puntos 3D de cada esquima del patron de ajedrez. $\rightarrow$ ```get_chessboard_points((9,6), 24, 24)```
-5. Con los puntos 3D definidos y los puntos 2D encontrados en cada imagen, se realiza la calibracion de la camara. $\rightarrow$ ```cv2.calibrateCamera```
+2. Para cada imagen realizar una deteccion de esquinas. ```cv2.findChessboardCorners```
+3. Refinar el resultado obtenido para aumentar la precision. ```cv2.cornerSubPix```
+4. Definir los puntos 3D de cada esquima del patron de ajedrez. ```get_chessboard_points((9,6), 24, 24)```
+5. Con los puntos 3D definidos y los puntos 2D encontrados en cada imagen, se realiza la calibracion de la camara. ```cv2.calibrateCamera```
 6. Guardar resultados de la calibracion a un archivo .npy y representacion del resultado.
 
 
@@ -92,17 +94,44 @@ A continuacion se muestra la posicion de la camara para cada imagen que hemos ut
 
 
 ---
-### 5. Tag detector
+### 5. Tag detector and get camera position.
+
+Una vez tenemos la camara calibrada, ya podemos empezar con la deteccion de las balizas y el cálculo de la posicion de la camara. 
+
+Los pasos seguidos son los siguientes:
+1. Cargar parametros intrinsecos de la camara (K y distorsion).
+2. Establecer conexion con la camara movil mediante la direccion web. 
+3. Convertir la imagen a grayscale.
+4. Aplicar el detector de balizas. ```Detection = at_detector.detect(gray, estimate_tag_pose=False)```
+5. Para cada Deteccion obtenida (puede detectar mas de una baliza en la imagen) mediante el solvePnP se obtiene rvec y tvec. ```cv2.solvePnPRansac```
+6. Se realiza un refinamiento de rvec y tvec mediante un proceso de optimizacion iterativo usando Levenberg-Marquardt. ```cv2.solvePnPRefineLM```
+6. Utilizamos ```cv2.Rodrigues``` para convertir rvec en R (matriz). Con la siguiente formula obtenemos el centro opctico de la camara en coordenadas mundo:
+<p align="center">
+	<img src="images/cam_center.png" alt="pos_calib" width="20%"/>
+</p>
+7. Se realiza la representacion 3D y 2D sobre la imagen. 
 
 
 ---
-### 6. Obtain camera position
+### 6. Results and conclusions.
 
 
----
-### 8. Real-time 3D representation.
 
+<p align="center">
+	<a href="https://www.youtube.com/watch?v=ACiy273RN0g" target="_blank">
+	<img src="images/youtube_play.png" alt="youtube" width="30%"/>
+	</a>
+</p>
 
----
-### 7. Results and conclusions.
+<p align="center">
+	<a href="https://www.youtube.com/watch?v=XjnPv5EeaSE" target="_blank">
+	<img src="images/youtube_play.png" alt="youtube" width="30%"/>
+	</a>
+</p>
+
+<p align="center">
+	<a href="https://youtu.be/Z6aoJRJHjtY" target="_blank">
+	<img src="images/youtube_play.png" alt="youtube" width="30%"/>
+	</a>
+</p>
 
