@@ -109,29 +109,45 @@ Los pasos seguidos son los siguientes:
 <p align="center">
 	<img src="images/cam_center.png" alt="pos_calib" width="20%"/>
 </p>
-7. Se realiza la representacion 3D y 2D sobre la imagen. 
+7. Se realiza la representacion 3D. Para la representacion 2D se muestran la baliza rodeada y los ejes encontrado mediante una proyeccion desde el espacio 3D al 2D. ```cv2.projectPoints```
 
+El resultado que se puede observar al ejecutar la aplicacion es el siguiente:
+<p align="center">
+	<img src="images/results.png" alt="youtube" width="80%"/>
+</p>
 
 ---
 ### 6. Results and conclusions.
 
-
-
-<p align="center">
-	<a href="https://www.youtube.com/watch?v=ACiy273RN0g" target="_blank">
-	<img src="images/youtube_play.png" alt="youtube" width="30%"/>
-	</a>
-</p>
+La configuracion de las balizas uttilizada ha sido:
 
 <p align="center">
-	<a href="https://www.youtube.com/watch?v=XjnPv5EeaSE" target="_blank">
-	<img src="images/youtube_play.png" alt="youtube" width="30%"/>
-	</a>
+	<img src="images/config_tags.png" alt="youtube" width="80%"/>
 </p>
 
-<p align="center">
-	<a href="https://youtu.be/Z6aoJRJHjtY" target="_blank">
-	<img src="images/youtube_play.png" alt="youtube" width="30%"/>
-	</a>
-</p>
+>  Todas las medidas anteriores estan en milimetros.
+
+
+Se ha realizado tres videos demostrativos donde se ven ejemplos para 1, 2 y 3 balizas en la deteccionn:
+
+* Una baliza:
+	<p align="center">
+		<a href="https://www.youtube.com/watch?v=ACiy273RN0g" target="_blank">
+		<img src="images/youtube_play.png" alt="youtube" width="20%"/>
+		</a>
+	</p>
+
+* Dos balizas:
+	<p align="center">
+		<a href="https://www.youtube.com/watch?v=XjnPv5EeaSE" target="_blank">
+		<img src="images/youtube_play.png" alt="youtube" width="20%"/>
+		</a>
+	</p>
+
+* Dos balizas:
+	<p align="center">
+		<a href="https://www.youtube.com/watch?v=Z6aoJRJHjtY" target="_blank">
+		<img src="images/youtube_play.png" alt="youtube" width="20%"/>
+		</a>
+	</p>
 
