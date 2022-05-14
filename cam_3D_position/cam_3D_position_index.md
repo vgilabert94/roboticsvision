@@ -9,33 +9,33 @@
 
 ### 1. Introduction
 
-El objetivo del siguiente trabajo es obtener una representación tridimensional en tiempo real de la posición de la cámara en una escena realizando la detección de balizas para autolocalizarnos.
+The purpose of the following work is to obtain a three-dimensional representation in real time of the position of the camera in a scene by detecting beacons for self-localization.
 
-Se va a utilizar la aplicación Webcam IP, donde obtendremos los frames de nuestro movil. La resuloción de la imágenes obtenidas es de (960,1280) con un frame rate de 10fps.
-En estas imagenes se realizará la detección de balizas y el cálculo de la posicion 3D de la camara utilizando la matriz de rotacion (R) y el vector de traslacion (tvec).
-Para obtener la R y tvec, se utiliza la funcion solvePnP, con las posiciones 3D conocidas de la baliza y los pixeles de las esquinas.
-Los pixeles de las esquinas de las balizas son obtenidos mediante la libreria apriltags, donde nos develve los cuatro puntos (x,y) correspondientes a las esquinas.
+We are going to use the Webcam IP application, where we will obtain the frames from our mobile phone. The resolution of the images obtained is (960,1280) with a frame rate of 10fps.
+In these images we will perform the tag detection and the calculation of the 3D position of the camera using the rotation matrix (R) and the translation vector (tvec).
+To obtain the R and tvec, the solvePnP function is used, with the known 3D positions of the tag and corner pixels of 2D chessborad image.
+The corner pixels of the beacons are obtained using the apriltags library, which gives us the four points (x,y) corresponding to the corners.
 
-Todo el proceso anterior, es dependiente de la calibracion de la cámara. Debemos de obtener una calibracion correcta para obtener la matriz de intrinsecos y la posible distorsion de la lente.
+All the previous process is depending on the calibration of the camera. We must obtain a correct calibration to obtain the intrinsic matrix and the possible distortion of the lens.
 
 ---
 ### 2. How to use?
 
-Para ejecutar el programa se describen a continuacion los archivos y las posibles configuraciones:
+To run the program, the files and possible configurations are described below:
 
 
-* Se ha utlizado un repositorio en python con bindings a la libreria apriltags (C). Solo funciona con Python 3.6 y 3.7. Instalamos todas las librerias necesiaras que vienen en el archivo de requerimeintos.
-  ````
+* A python repository with bindings to the apriltags (C) library has been used. It only works with Python 3.6 and 3.7. We install all the necessary libraries that are included in the requirements file.
+  ```
   python -m pip install --upgrade pip
   pip install -r requirements.txt
-  ````
+  ```
 
-* Para realizar la calibración de la cámara se ha implentado el script camera_calibration.py:
+* To perform the camera calibration, the script **camera_calibration.py** has been implemented:
   ```
   python camera_calibration.py --folder images_Calibration/ --chess_shape (9,6) --chess_size 24
   ```
 
-  Los parámetros para script son los siguientes: 
+  The script parameters are as follows: 
   
   |     |                 | Description                                                                     |
   |:---:|:---------------:|:-------------------------------------------------------------------------------:|
@@ -46,7 +46,7 @@ Para ejecutar el programa se describen a continuacion los archivos y las posible
   | -p  | --plot_cameras  | Activate flag to 3D plot of all cameras positions.                              |
 
 
-* Para ejecutar la aplicación principal para la detección de las balizas y el calculo de la posición es get_position.py:
+* To run the main application for tag detection and position calculation is **get_position.py**:
   ```
   python .\get_position.py -c results_calibration/parameters_20220514_123408.npy -id http://192.168.100.74:4747/video -s -p
   ```
@@ -65,27 +65,26 @@ Para ejecutar el programa se describen a continuacion los archivos y las posible
 ---
 ### 4. Camera calibration
 
-Para el objetivo de este trabajo es necesario realizar una calibracion de la camara para obtener los parametros intrinsecos (K) de la camara.
+For the objective of this work it is necessary to perform a calibration of the camera to obtain the intrinsic parameters (K) of the camera.
 
 > python camera_calibration.py --folder images_Calibration/ --chess_shape (9,6) --chess_size 24
 
-Se ha utilizado una imagen de ejedrez de un tamaño (9,6) esquinas y un tamaño de cuadrado de 24mm. El total de imagenes utilizadas para  la calibracion es de 48. A continuacion se pueden ver algunas de estas imagenes:
+A chess image with a size (9,6) corners and a square size of 24mm has been used. The total number of images used for the calibration is 48. Below you can see some of these images:
 
 <p align="center">
 	<img src="images/imgs_calib.png" alt="imgs_calib" width="80%"/>
 </p>
 
-Con el script explicado en punto anterior, se ha realizado nuestra calibracion. El proceso implementado ha sido:
+With the script explained in the previous point, our calibration has been performed. The implemented process has been:
 
-1. Cargar las imagenes para la calibracion.
-2. Para cada imagen realizar una deteccion de esquinas. ```cv2.findChessboardCorners```
-3. Refinar el resultado obtenido para aumentar la precision. ```cv2.cornerSubPix```
-4. Definir los puntos 3D de cada esquima del patron de ajedrez. ```get_chessboard_points((9,6), 24, 24)```
-5. Con los puntos 3D definidos y los puntos 2D encontrados en cada imagen, se realiza la calibracion de la camara. ```cv2.calibrateCamera```
-6. Guardar resultados de la calibracion a un archivo .npy y representacion del resultado.
+1. Load the images for calibration.
+2. For each image perform a corner detection. ```cv2.findChessboardCorners```.
+3. Refine the obtained result to increase the accuracy. ```cv2.cornerSubPix```.
+4. Define the 3D points of each corner of the chessboard pattern. ```get_chessboard_points((9,6), 24, 24)```.
+5. With the defined 3D points and the 2D points found in each image, perform the camera calibration. ```cv2.calibrateCamera```.
+6. Save calibration results to an .npy file and display the result.
 
-
-A continuacion se muestra la posicion de la camara para cada imagen que hemos utlizado en la calibracion:
+The following shows the camera position for each image we have used in the calibration:
 
 <p align="center">
 	<img src="images/calib_pos.png" alt="pos_calib" width="80%"/>
@@ -96,58 +95,67 @@ A continuacion se muestra la posicion de la camara para cada imagen que hemos ut
 ---
 ### 5. Tag detector and get camera position.
 
-Una vez tenemos la camara calibrada, ya podemos empezar con la deteccion de las balizas y el cálculo de la posicion de la camara. 
+Once we have the camera calibrated, we can start with the detection of the tags and the calculation of the camera position. 
 
-Los pasos seguidos son los siguientes:
-1. Cargar parametros intrinsecos de la camara (K y distorsion).
-2. Establecer conexion con la camara movil mediante la direccion web. 
-3. Convertir la imagen a grayscale.
-4. Aplicar el detector de balizas. ```Detection = at_detector.detect(gray, estimate_tag_pose=False)```
-5. Para cada Deteccion obtenida (puede detectar mas de una baliza en la imagen) mediante el solvePnP se obtiene rvec y tvec. ```cv2.solvePnPRansac```
-6. Se realiza un refinamiento de rvec y tvec mediante un proceso de optimizacion iterativo usando Levenberg-Marquardt. ```cv2.solvePnPRefineLM```
-6. Utilizamos ```cv2.Rodrigues``` para convertir rvec en R (matriz). Con la siguiente formula obtenemos el centro opctico de la camara en coordenadas mundo:
+The steps are as follows:
+1. Load intrinsic parameters of the camera (K and distortion).
+2. Connect to the mobile camera via the web address. 
+3. Convert the image to grayscale.
+4. Apply the tag detector ```Detection = at_detector.detect(gray, estimate_tag_pose=False)```.
+5. For each Detection obtained (can detect more than one tag in the image) by solvePnP get rvec and tvec. ```cv2.solvePnPRansac```.
+6. A refinement of rvec and tvec is performed by an iterative optimization process using Levenberg-Marquardt. ```cv2.solvePnPRefineLM```.
+6. We use ```cv2.Rodrigues``` to convert rvec to R (matrix). With the following formula we obtain the optical center of the camera in world coordinates:
 <p align="center">
 	<img src="images/cam_center.png" alt="pos_calib" width="20%"/>
 </p>
-7. Se realiza la representacion 3D. Para la representacion 2D se muestran la baliza rodeada y los ejes encontrado mediante una proyeccion desde el espacio 3D al 2D. ```cv2.projectPoints```
+7. The 3D representation is performed. For the 2D representation painted beacon and axes calculated by a projection from 3D to 2D space. ```cv2.projectPoints```.
 
-El resultado que se puede observar al ejecutar la aplicacion es el siguiente:
+The result that can be observed when running the application is the following:
 <p align="center">
 	<img src="images/results.png" alt="youtube" width="80%"/>
 </p>
 
 ---
-### 6. Results and conclusions.
+### 6. Results
 
-La configuracion de las balizas uttilizada ha sido:
+The configuration of the tag used has been:
 
 <p align="center">
-	<img src="images/config_tags.png" alt="youtube" width="80%"/>
+	<img src="images/config_tags.png" alt="youtube" width="100%"/>
 </p>
+>  All measurements above are in millimeters.
 
->  Todas las medidas anteriores estan en milimetros.
 
+Three demonstration videos have been made showing examples for 1, 2 and 3 tags in the detection:
 
-Se ha realizado tres videos demostrativos donde se ven ejemplos para 1, 2 y 3 balizas en la deteccionn:
-
-* Una baliza:
+* One tag:
 	<p align="center">
 		<a href="https://www.youtube.com/watch?v=ACiy273RN0g" target="_blank">
 		<img src="images/youtube_play.png" alt="youtube" width="20%"/>
 		</a>
 	</p>
 
-* Dos balizas:
+* Two tags:
 	<p align="center">
 		<a href="https://www.youtube.com/watch?v=XjnPv5EeaSE" target="_blank">
 		<img src="images/youtube_play.png" alt="youtube" width="20%"/>
 		</a>
 	</p>
 
-* Dos balizas:
+* Three tags:
 	<p align="center">
 		<a href="https://www.youtube.com/watch?v=Z6aoJRJHjtY" target="_blank">
 		<img src="images/youtube_play.png" alt="youtube" width="20%"/>
 		</a>
 	</p>
 
+---
+### 7. Conclusions.
+
+* A script has been implemented to perform the calibration of a camera using N images. 
+
+* A script has been implemented to use a mobile camera and to be able to autolocalize it by detecting tags and solving the PnP problem to find rvec and tvec.
+
+* A real time implementation has been achieved, where we can visualize the results in 3D and 2D.
+
+* I really liked to do this practice because it has been used what I have learned in the subject of Three Dimensional Vision and Robotic Vision.
